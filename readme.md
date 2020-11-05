@@ -1,3 +1,3 @@
 # Flask Test API
 
--- GET, POST
+1. Work with GET, POST
