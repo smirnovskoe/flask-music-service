@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -25,10 +25,11 @@ inner_db = [
     },
 ]
 
-@app.route('/')
-def index():
-    return "Test"
+
+@app.route('/api/tracks')
+def get_tracks():
+    return jsonify({'tracks': inner_db})
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=9999)
