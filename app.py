@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, make_response
 
 app = Flask(__name__)
 
@@ -38,6 +38,11 @@ def get_track_by_id(track_id):
         abort(404)
 
     return jsonify({'track': track})
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not Found'}))
 
 
 if __name__ == "__main__":
