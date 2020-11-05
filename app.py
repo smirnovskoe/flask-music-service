@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 
 app = Flask(__name__)
 
@@ -29,6 +29,15 @@ inner_db = [
 @app.route('/api/tracks')
 def get_tracks():
     return jsonify({'tracks': inner_db})
+
+
+@app.route('/api/tracks/<int:track_id>', methods=['GET'])
+def get_track_by_id(track_id):
+    track = list(filter(lambda x: x['id'] == track_id, inner_db))
+    if(len(track) == 0):
+        abort(404)
+
+    return jsonify({'track': track})
 
 
 if __name__ == "__main__":
