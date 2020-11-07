@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
 
 app = Flask(__name__)
 
@@ -26,15 +26,28 @@ inner_db = [
 ]
 
 
-@app.route('/api/tracks')
+@app.route('/api/music', methods=['GET', 'POST'])
 def get_tracks():
+    """List or create tracks"""
+    if request.method == 'POST':
+        print(request.json)
+        if 'singer' not in request.json or 'song' not in request.json:
+            abort(400)
+        track = {
+            'id': inner_db[-1]['id'] + 1,
+            'singer': request.json['singer'],
+            'song': request.json['song']
+        }
+        inner_db.append(track)
+        return jsonify({"track": track},)
+    # request.method == 'GET'
     return jsonify({'tracks': inner_db})
 
 
-@app.route('/api/tracks/<int:track_id>', methods=['GET'])
+@app.route('/api/music/<int:track_id>', methods=['GET'])
 def get_track_by_id(track_id):
     track = list(filter(lambda x: x['id'] == track_id, inner_db))
-    if(len(track) == 0):
+    if not track:
         abort(404)
 
     return jsonify({'track': track})
@@ -46,4 +59,4 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=9999)
+    app.run(debug=True, port=9998)
