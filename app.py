@@ -35,7 +35,6 @@ def health():
 def get_tracks():
     """List or create tracks"""
     if request.method == 'POST':
-        print(request.json)
         if 'singer' not in request.json or 'song' not in request.json:
             abort(400)
         track = {
@@ -44,7 +43,7 @@ def get_tracks():
             'song': request.json['song']
         }
         inner_db.append(track)
-        return jsonify({"track": track},)
+        return jsonify({"track": track},), 201
     # request.method == 'GET'
     return jsonify({'tracks': inner_db})
 
@@ -55,7 +54,7 @@ def get_track_by_id(track_id):
     if not track:
         abort(404)
 
-    return jsonify({'track': track})
+    return jsonify({'track': track}), 200
 
 
 @app.route('/api/music/<int:track_id>', methods=['PUT'])
@@ -88,4 +87,4 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=9997)
+    app.run(debug=True, port=9996)
