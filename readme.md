@@ -1,3 +1,5 @@
 # Flask Test API
 
-1. GET, POST, PUT
+<b>Creating a test REST API service. This service includes:<b>
+
+1. GET, POST, PUT, DELETE requests
