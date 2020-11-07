@@ -3,3 +3,4 @@
 <b>Creating a test REST API service. This service includes:<b>
 
 1. GET, POST, PUT, DELETE requests
+2. Working with unittest module
