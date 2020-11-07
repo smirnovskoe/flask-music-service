@@ -26,6 +26,11 @@ inner_db = [
 ]
 
 
+@app.route('/api/health.json')
+def health():
+    return jsonify({'status': 'UP'}), 200
+
+
 @app.route('/api/music', methods=['GET', 'POST'])
 def get_tracks():
     """List or create tracks"""
