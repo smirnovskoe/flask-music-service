@@ -53,6 +53,17 @@ def get_track_by_id(track_id):
     return jsonify({'track': track})
 
 
+@app.route('/api/music/<int:track_id>', methods=['DELETE'])
+def delete_track(track_id):
+    """Delete track from Db by it id"""
+    track = list(filter(lambda x: x['id'] == track_id, inner_db))
+    if not track:
+        abort(404)
+    inner_db.remove(track[0])
+
+    return jsonify({'track': True})
+
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not Found'}))
