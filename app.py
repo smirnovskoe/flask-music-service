@@ -67,7 +67,7 @@ def update_track(track_id):
     track[0]['singer'] = request.json.get('singer', track[0]['singer'])
     track[0]['song'] = request.json.get('song', track[0]['song'])
 
-    return jsonify({'track': track[0]})
+    return jsonify({'track': track[0]}), 200
 
 
 @app.route('/api/music/<int:track_id>', methods=['DELETE'])
@@ -87,4 +87,6 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=9996)
+    port = 9995
+    host = '127.0.0.1'
+    app.run(debug=True, port=port)

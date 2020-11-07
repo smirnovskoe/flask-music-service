@@ -5,8 +5,13 @@ NEW_TRACK = {
         "song": "Happy New Year"
     }
 
-r = requests.post("http://127.0.0.1:9996/api/music", json=NEW_TRACK)
+id = 5
+
+new_track = NEW_TRACK
+new_track['id'] = 5
+
+r = requests.get("http://127.0.0.1:9995/api/music/5")
 
 print(r.status_code)
-
-#print(len(r.json()['tracks']))
+print(new_track)
+print(r.json()['track'][0])
