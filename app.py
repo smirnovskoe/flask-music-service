@@ -53,6 +53,19 @@ def get_track_by_id(track_id):
     return jsonify({'track': track})
 
 
+@app.route('/api/music/<int:track_id>', methods=['PUT'])
+def update_track(track_id):
+    track = list(filter(lambda x: x['id'] == track_id, inner_db))
+    if not track:
+        abort(404)
+    if not request.json:
+        abort(404)
+    track[0]['singer'] = request.json.get('singer', track[0]['singer'])
+    track[0]['song'] = request.json.get('song', track[0]['song'])
+
+    return jsonify({'track': track[0]})
+
+
 @app.route('/api/music/<int:track_id>', methods=['DELETE'])
 def delete_track(track_id):
     """Delete track from Db by it id"""
